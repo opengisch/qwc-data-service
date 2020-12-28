@@ -253,6 +253,7 @@ index_parser.add_argument('filter')
 feature_multipart_parser = reqparse.RequestParser(argument_class=CaseInsensitiveArgument)
 feature_multipart_parser.add_argument('feature', help='Feature', required=True, location='form')
 feature_multipart_parser.add_argument('file_document', help='File attachments', type=FileStorage, location='files')
+feature_multipart_parser.add_argument('theme', help='Theme', location='form')
 
 show_parser = reqparse.RequestParser(argument_class=CaseInsensitiveArgument)
 show_parser.add_argument('crs')
@@ -364,6 +365,14 @@ class CreateFeatureMultipart(Resource):
         GeoJSON Feature.
         """
         args = feature_multipart_parser.parse_args()
+        try:
+            theme = json.loads(args['theme'])
+        except:
+            theme = None
+
+        if theme:
+            dataset = "{}.{}".format(theme, dataset)
+
         try:
             feature = json.loads(args['feature'])
         except:
