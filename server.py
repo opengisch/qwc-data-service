@@ -750,9 +750,15 @@ class KeyValues(Resource):
             except:
                 continue
             ret[table] = []
-            result = data_service.index(
-                get_auth_user(), table, None, None, None
-            )
+
+            if table.endswith('.hole_info'):
+                from golfview_utils import get_hole_info
+                result = get_hole_info(data_service, table, get_auth_user(), key_field_name, value_field_name)
+            else:
+                result = data_service.index(
+                    get_auth_user(), table, None, None, None
+                )
+
             if 'feature_collection' in result:
                 for feature in result['feature_collection']['features']:
                     key = feature["id"] if key_field_name == "id" else feature['properties'][key_field_name]
