@@ -3,7 +3,12 @@ from collections import OrderedDict
 from sqlalchemy.sql import text as sql_text
 
 
-def get_hole_info(data_service, dataset, identity, key_field_name, value_field_name):
+def get_hole_info(data_service, dataset, identity, key_field_name,
+                  value_field_name):
+    """Query the db and return a collection of features where the
+    requested value used in the editing form is composed used the
+    referenced table 'course_info'
+    """
 
     dataset_features_provider = data_service.dataset_features_provider(
         identity, dataset)
@@ -14,9 +19,11 @@ def get_hole_info(data_service, dataset, identity, key_field_name, value_field_n
 
     sql = sql_text((
         """
-        select hole_info_id, hole_number, course_name from {schema}.hole_info as hole
-        join {schema}.course_info as course
-        on hole.course_info_fk = course.course_info_id;
+        SELECT hole_info_id,
+               hole_number,
+               course_name from {schema}.hole_info AS hole
+        JOIN {schema}.course_info AS course
+        ON hole.course_info_fk = course.course_info_id;
         """.format(schema=schema)))
 
     # connect to database and start transaction (for read-only access)
