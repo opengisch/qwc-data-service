@@ -2,6 +2,31 @@ import re
 from collections import OrderedDict
 from sqlalchemy.sql import text as sql_text
 
+def enrich_feature(data_service, dataset, feature):
+    """
+    Enriches the feature based on dataset information. Ex. adding the golfclub_fk
+    :param data_service:
+    :param dataset:
+    :param feature:
+    :return:
+    """
+
+    if 'golfclub_fk' in data_service.fields:
+        feature['properties']['golfclub_fk'] = getGolfclubFk(dataset)
+
+
+def getGolfclubFk(dataset) -> str:
+    """
+    :return: The UUID for the golfclub
+    """
+
+    # TODO: get it from the database table golf.golfclub_info
+    folder, schema, table = re.split('/|\.', dataset)
+    switcher = {
+        'holzhaeusern': 'b36af778-ea90-11ea-8397-0242ac180002'
+    }
+    return switcher.get(schema)
+
 
 def get_hole_info(data_service, dataset, identity, key_field_name,
                   value_field_name):

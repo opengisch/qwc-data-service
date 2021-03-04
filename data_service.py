@@ -6,6 +6,7 @@ from qwc_services_core.database import DatabaseEngine
 from qwc_services_core.permissions_reader import PermissionsReader
 from qwc_services_core.runtime_config import RuntimeConfig
 from dataset_features_provider import DatasetFeaturesProvider
+from golfview_utils import enrich_feature
 
 
 class DataService():
@@ -138,6 +139,9 @@ class DataService():
         dataset_features_provider = self.dataset_features_provider(
             identity, dataset
         )
+
+        enrich_feature(dataset_features_provider, dataset, feature)
+
         if dataset_features_provider is not None:
             # check create permission
             if not dataset_features_provider.creatable():
