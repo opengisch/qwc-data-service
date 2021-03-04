@@ -2,11 +2,6 @@ import re
 from collections import OrderedDict
 from sqlalchemy.sql import text as sql_text
 
-# ==== Used for rempte debugging with pycharm
-# import pydevd_pycharm
-# pydevd_pycharm.settrace('172.17.0.1', port=5678, stdoutToServer=True, stderrToServer=True)
-# ==== Used for rempte debugging with pycharm
-
 def enrich_feature(data_service, dataset, feature):
     """
     Enriches the feature based on dataset information. Ex. adding the golfclub_fk
@@ -18,14 +13,6 @@ def enrich_feature(data_service, dataset, feature):
 
     if 'golfclub_fk' in data_service.fields:
         feature['properties']['golfclub_fk'] = getGolfclubFk(dataset)
-
-    # switch(getTheme()) {
-    # case 'holzhaeusern/holzhaeusern':
-    #     return 'b36af778-ea90-11ea-8397-0242ac180002';
-    #     break;
-    # default:
-    #     return '';
-    # }
 
 
 def getGolfclubFk(dataset) -> str:

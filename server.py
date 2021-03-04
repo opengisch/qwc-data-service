@@ -16,10 +16,6 @@ from qwc_services_core.tenant_handler import TenantHandler
 from data_service import DataService
 from attachments_service import AttachmentsService
 
-# ==== Used for rempte debugging with pycharm
-# import pydevd_pycharm
-# pydevd_pycharm.settrace('172.17.0.1', port=5678, stdoutToServer=True, stderrToServer=True)
-# ==== Used for rempte debugging with pycharm
 
 class Request(RequestBase):
     """Custom Flask Request subclass"""
