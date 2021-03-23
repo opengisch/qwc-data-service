@@ -169,6 +169,7 @@ class DataService():
                     }
                 return {'feature': feature}
             else:
+                self.logger.error(validation_errors)
                 return {
                     'error': "Feature validation failed",
                     'error_details': validation_errors,
